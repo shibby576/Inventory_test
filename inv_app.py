@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-path = '/Users/jonathan/Desktop/inventory.csv'
+path = '/inventory.csv'
 df = pd.read_csv(path)
 
 st.title('Inventory search')
