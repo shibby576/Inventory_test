@@ -36,23 +36,23 @@ with st.sidebar.form(key='my_form'):
 #FUNCTIONS
 #Loan amount function
 def loan_amt(price, docfee, taxrate, tradevalue,amountdown,tagfee):
-    loanamt = (((price+docfee)*(1+taxrate)-(tradevalue + amountdown))+tagfee)
-    return loanamt
+	loanamt = (((price+docfee)*(1+taxrate)-(tradevalue + amountdown))+tagfee)
+	return loanamt
 
 #LTV formula
 def ltv_calc(loan,value):
-    ltv=(loan/value)
-    return ltv
+	ltv=(loan/value)
+	return ltv
 
 #Payment formula
 def pmt(apr,loanamt,term):
-    pmt=(((apr/12)*(loanamt)))/(1-(1+(apr/12))**-term)
-    return pmt
+	pmt=(((apr/12)*(loanamt)))/(1-(1+(apr/12))**-term)
+	return pmt
 
 #gross function
 def gross(price,cost,projbackend,projbankfee,loan_amt,projintspread):
-    gross = (price-cost)+projbackend+projbankfee+(loan_amt*projintspread)
-    return gross
+	gross = (price-cost)+projbackend+projbankfee+(loan_amt*projintspread)
+	return gross
 
 #define body types
 suv = ['4D Sport Utility', '2D Sport Utility']
@@ -65,31 +65,31 @@ convertible = ['2D Convertible','2D Cabriolet']
 
 # categorize each row based on body type
 def classdef(body):
-    style=''
-    if body in suv:
-        style='SUV'
-        return style
-    elif body in sedan:
-        style='SEDAN'
-        return style
-    elif body in truck:
-        style='TRUCK'
-        return style
-    elif body in hatchback:
-        style='HATCHBACK'
-        return style
-    elif body in coupe:
-        style='COUPE'
-        return style
-    elif body in van:
-        style='VAN'
-        return style
-    elif body in convertible:
-        style='VERT'
-        return style
-    else:
-        style='OTHER'
-        return style
+	style=''
+	if body in suv:
+		style='SUV'
+		return style
+	elif body in sedan:
+		style='SEDAN'
+		return style
+	elif body in truck:
+		style='TRUCK'
+		return style
+	elif body in hatchback:
+		style='HATCHBACK'
+		return style
+	elif body in coupe:
+		style='COUPE'
+		return style
+	elif body in van:
+		style='VAN'
+		return style
+	elif body in convertible:
+		style='VERT'
+		return style
+	else:
+		style='OTHER'
+		return style
 
 
 #SCORING
@@ -103,39 +103,39 @@ LTVweight = .5
 
 #class match score
 def classmatch(body,vehicletype):
-    typeMatchscore_yes = 1
-    typeMatchscore_no = .5
-    if body==vehicletype:
-        class_match=typeMatchscore_yes
-    else:
-        class_match=typeMatchscore_no
-        
-    return class_match
+	typeMatchscore_yes = 1
+	typeMatchscore_no = .5
+	if body==vehicletype:
+		class_match=typeMatchscore_yes
+	else:
+		class_match=typeMatchscore_no
+		
+	return class_match
 
 #Customer score
 def cust_score(desiredpayment,pmt,pmtWeight,typeMatchWeight,classmatch):
-    cust_score = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)
-    return cust_score
+	cust_score = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)
+	return cust_score
 
 #Gross score
 def gross_score(gross,desiredGross):
-    gross_score = gross/desiredGross
-    return gross_score
+	gross_score = gross/desiredGross
+	return gross_score
 
 #LTV score
 def ltv_score(LTVMax,ltv):
-    score = LTVMax/ltv
-    return score
+	score = LTVMax/ltv
+	return score
 
 # dealer score
 def dealer_score(grossScore,grossWeight,LTVweight,LTVscore):
-    score = (((grossScore*grossWeight)+(LTVweight*LTVscore))/grossWeight+LTVscore)
-    return score
+	score = (((grossScore*grossWeight)+(LTVweight*LTVscore))/grossWeight+LTVscore)
+	return score
 
 #total score
 def total_score(desiredpayment,payment,pmtWeight,typeMatchWeight,Classmatch,GrossScore,grossWeight,LTVweight,LTVscore):
-    score = (((desiredpayment/payment)*pmtWeight)+(typeMatchWeight*Classmatch)+(GrossScore*grossWeight)+(LTVweight*LTVscore))/((pmtWeight+typeMatchWeight)+(grossWeight+LTVweight))
-    return score
+	score = (((desiredpayment/payment)*pmtWeight)+(typeMatchWeight*Classmatch)+(GrossScore*grossWeight)+(LTVweight*LTVscore))/((pmtWeight+typeMatchWeight)+(grossWeight+LTVweight))
+	return score
 
 #Form Output
 if submit_button:
@@ -164,5 +164,5 @@ if submit_button:
 
 	final_df=df.loc[(df['Payment'] <=(desiredpayment*(1+pmtVar))) & (df['Gross'] >= grossMin) & (df['LTV'] < LTVMax)].sort_values(by='Cust score', ascending=False)
 	st.write(final_df[['year', 'make', 'model', 'vin','body','price','priceGuide', 'cost', 'loan amount','LTV', 'Payment','Gross','Class','Class Match', 'Cust score','Gross score','LTV score','Dealer score', 'Total score']])
-    st.subheader('Number of vehicle options:')
-    st.text(len(final_df.index))
+	st.subheader('Number of vehicle options:')
+	st.text(len(final_df.index))
