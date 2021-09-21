@@ -164,7 +164,7 @@ if submit_button:
 	df['Total score'] = df.apply(lambda x: total_score(desiredpayment,x['Payment'],pmtWeight,typeMatchWeight,x['Class Match'],x['Gross score'],grossWeight,LTVweight,x['LTV score']),axis=1)
 	final_df=df.loc[(df['Payment'] <=(desiredpayment*(1+pmtVar))) & (df['Gross'] >= grossMin) & (df['LTV'] < LTVMax)].sort_values(by='Cust score', ascending=False)
 
-	col1, col2 = st.columns(2)
+	col1, col2, col3= st.columns(3)
 	with col1:
 		st.subheader('Overall stats')
 #		st.subheader('Number of vehicle options:')
@@ -178,6 +178,10 @@ if submit_button:
 		st.write('Max payment: ',final_df['Payment'].max())
 		st.write('Avg customer score: ',final_df['Cust score'].mean())
 		st.write('Avg dealer score: ',final_df['Dealer score'].mean())
+	with col3:
+		st.write('Customer score','cust_score = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
+		#st.write('Customer score','cust_score = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
+
 	st.subheader('Vehicle search results')
 	st.table(final_df[['year', 'make', 'model', 'vin','body','price','priceGuide', 'cost', 'loan amount','LTV', 'Payment','Gross','Class','Class Match', 'Cust score','Gross score','LTV score','Dealer score', 'Total score']])
 
