@@ -9,15 +9,15 @@ st.title('Inventory search')
 #Create form to collect inputs
 with st.sidebar.form(key='my_form'):
 #Customer input variables
-	amountdown = int(st.text_input('Amount Down',0))
-	tradevalue = int(st.text_input('Trade Value',0))
-	taxrate = float(st.text_input('Tax rate',0))
+	amountdown = int(st.text_input('Amount Down ex 500',500))
+	tradevalue = int(st.text_input('Trade Value ex 1000',1000))
+	taxrate = float(st.text_input('Tax rate ex 0.07',0.07))
 #Creditscore = 0
-	interestrate = float(st.text_input('Enter APR',0))
+	interestrate = float(st.text_input('Enter APR ex 0.12',0.12))
 	income = 0
-	desiredpayment = int(st.text_input('Desired payment',0))
-	vehicletype = st.text_input('Enter Vehicle type')
-	term=int(st.text_input('Enter term',0))
+	desiredpayment = int(st.text_input('Desired payment ex 300',300))
+	vehicletype = st.text_input('Enter Vehicle type (only SUV, SEDAN, TRUCK, COUPE, VERT, VAN, HATCHBACK', 'SUV')
+	term=int(st.text_input('Enter term ex 72',72))
 
 #Dealer input veriables
 	docfee=int(st.text_input('Enter Doc Fee',250)) #pre tax
@@ -88,7 +88,7 @@ def classdef(body):
         style='VERT'
         return style
     else:
-        style='text'
+        style='OTHER'
         return style
 
 
