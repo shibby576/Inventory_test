@@ -163,12 +163,15 @@ if submit_button:
 	st.title('Inventory search')
 	col1, col2 = st.columns(2)
 	with col1:
+		st.subheader('Overall stats')
 #		st.subheader('Number of vehicle options:')
 #		st.text(len(final_df.index))
 		st.write('Number of vehicle options: ',len(final_df.index))
 	with col2:
 		st.subheader('Option stats')
 #		st.text(final_df['Cust score'].mean())
+		st.write('Min payment: ',final_df['Payment'].min())
+		st.write('Max payment: ',final_df['Payment'].max())
 		st.write('Avg customer score: ',final_df['Cust score'].mean())
 		st.write('Avg dealer score: ',final_df['Dealer score'].mean())
 	st.subheader('Vehicle search results')
