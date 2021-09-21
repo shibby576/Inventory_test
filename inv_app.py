@@ -162,7 +162,7 @@ if submit_button:
 	final_df=df.loc[(df['Payment'] <=(desiredpayment*(1+pmtVar))) & (df['Gross'] >= grossMin) & (df['LTV'] < LTVMax)].sort_values(by='Cust score', ascending=False)
     st.title('Inventory search')
 	col1, col2 = st.columns(2)
-    with col1:
+	with col1:
 		st.subheader('Number of vehicle options:')
 		st.text(len(final_df.index))
 	with col2:
