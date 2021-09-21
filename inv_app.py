@@ -167,4 +167,5 @@ if submit_button:
 	st.write(final_df[['year', 'make', 'model', 'vin','body','price','priceGuide', 'cost', 'loan amount','LTV', 'Payment','Gross','Class','Class Match', 'Cust score','Gross score','LTV score','Dealer score', 'Total score']])
 	st.subheader('Number of vehicle options:')
 	st.text(len(final_df.index))
-	st.metric(label="Number of results", value=len(final_df.index))
+	num_result =len(final_df.index)
+	st.metric(label="Number of results", value=num_result)
