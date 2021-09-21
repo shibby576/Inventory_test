@@ -18,16 +18,16 @@ with st.sidebar.form(key='my_form'):
 	term=int(st.text_input('Enter term ex 72',72))
 
 #Dealer input veriables
-	docfee=int(st.text_input('Enter Doc Fee',250)) #pre tax
-	tagfee = int(st.text_input('Enter Tag fee',35)) #post tax
-	projbackend = int(st.text_input('Enter projected backend',1000))
-	projintspread = float(st.text_input('Enter projected int spread',.02))
-	projbankfee = int(st.text_input('Enter bank fee',-500))
-	LTVMax = float(st.text_input('Enter LTV Max',1.1))
-	grossMin = int(st.text_input('Enter Gross min',0))
+	docfee=int(st.text_input('Enter Doc Fee ex 250',250)) #pre tax
+	tagfee = int(st.text_input('Enter Tag fee ex 35',35)) #post tax
+	projbackend = int(st.text_input('Enter projected backend ex 1000',1000))
+	projintspread = float(st.text_input('Enter projected int spread ex 0.02',.02))
+	projbankfee = int(st.text_input('Enter bank fee ex -500',-500))
+	LTVMax = float(st.text_input('Enter LTV Max ex 1.05',1.1))
+	grossMin = int(st.text_input('Enter Gross min ex 500',500))
 	desiredGross = int(st.text_input('Enter desired gross',2500))
 	desiredLTV = float(st.text_input('Desired LTV',1.05))
-	pmtVar = float(st.text_input('Enter payment variance',0.25))
+	pmtVar = float(st.text_input('Enter payment variance ex 0.25',0.25))
 
 	submit_button = st.form_submit_button(label='Submit')
 
