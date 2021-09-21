@@ -166,7 +166,8 @@ if submit_button:
 		st.subheader('Number of vehicle options:')
 		st.text(len(final_df.index))
 	with col2:
-		st.subheader('column 2')
+		st.subheader('Customer stats')
+		st.text(final_df['cust_score'].mean())
 	st.subheader('Vehicle search results')
 	st.table(final_df[['year', 'make', 'model', 'vin','body','price','priceGuide', 'cost', 'loan amount','LTV', 'Payment','Gross','Class','Class Match', 'Cust score','Gross score','LTV score','Dealer score', 'Total score']])
 
