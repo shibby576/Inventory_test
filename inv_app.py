@@ -5,6 +5,7 @@ path = 'inventory.csv'
 df = pd.read_csv(path)
 
 st.title('Inventory search')
+st.subheader('Vehicle search results')
 
 #Create form to collect inputs
 with st.sidebar.form(key='my_form'):
@@ -166,3 +167,4 @@ if submit_button:
 	st.write(final_df[['year', 'make', 'model', 'vin','body','price','priceGuide', 'cost', 'loan amount','LTV', 'Payment','Gross','Class','Class Match', 'Cust score','Gross score','LTV score','Dealer score', 'Total score']])
 	st.subheader('Number of vehicle options:')
 	st.text(len(final_df.index))
+	st.metric(label="Number of results", value=len(final_df.index))
