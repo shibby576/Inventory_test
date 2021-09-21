@@ -136,7 +136,7 @@ def total_score(desiredpayment,payment,pmtWeight,typeMatchWeight,Classmatch,Gros
 	return score
 st.title('Inventory search')
 st.subheader('Instructions')
-st.write('Adjust the values on the left to mirror a typical deal and input the other parameters, such as Max LTV, that you would consider when working a deal. The results are sorted by the customer score, which is a function of whether the vehicle type matches what as input and how far the payment is from their desired payment. Vehicles with an LTV higher than set or a projected gross lower than whats set, will not be shown.')
+st.write('Adjust the values on the left to mirror a typical deal and input the other parameters, such as Max LTV, that you would consider when working a deal then click Submit. The results are sorted by the customer score, which is a function of whether the vehicle type matches what as input and how far the payment is from their desired payment. Vehicles with an LTV higher than set or a projected gross lower than whats set, will not be shown.')
 
 #Form Output
 if submit_button:
