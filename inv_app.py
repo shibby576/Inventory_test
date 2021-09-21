@@ -137,6 +137,11 @@ def total_score(desiredpayment,payment,pmtWeight,typeMatchWeight,Classmatch,Gros
 st.title('Inventory search')
 st.subheader('Instructions')
 st.write('Adjust the values on the left to mirror a typical deal and input the other parameters, such as Max LTV, that you would consider when working a deal then click Submit. The results are sorted by the customer score, which is a function of whether the vehicle type matches what as input and how far the payment is from their desired payment. Vehicles with an LTV higher than set or a projected gross lower than whats set, will not be shown.')
+st.subheader('Formulas')
+st.write('Customer score formula: ',' = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
+st.write('Customer score weights: pmtWeight = 5 typeMatchWeight = 2')
+st.write('Loan amount: ', '(((price+docfee)*(1+taxrate)-(tradevalue + amountdown))+tagfee)')
+st.write('Payment: ','(((apr/12)*(loanamt)))/(1-(1+(apr/12))**-term)')
 
 #Form Output
 if submit_button:
@@ -164,7 +169,7 @@ if submit_button:
 	df['Total score'] = df.apply(lambda x: total_score(desiredpayment,x['Payment'],pmtWeight,typeMatchWeight,x['Class Match'],x['Gross score'],grossWeight,LTVweight,x['LTV score']),axis=1)
 	final_df=df.loc[(df['Payment'] <=(desiredpayment*(1+pmtVar))) & (df['Gross'] >= grossMin) & (df['LTV'] < LTVMax)].sort_values(by='Cust score', ascending=False)
 
-	col1, col2, col3= st.columns(3)
+	col1, col2= st.columns(2)
 	with col1:
 		st.subheader('Overall stats')
 #		st.subheader('Number of vehicle options:')
@@ -178,12 +183,7 @@ if submit_button:
 		st.write('Max payment: ',final_df['Payment'].max())
 		st.write('Avg customer score: ',final_df['Cust score'].mean())
 		st.write('Avg dealer score: ',final_df['Dealer score'].mean())
-	with col3:
-		st.subheader('Formulas')
-		st.write('Customer score formula: ',' = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
-		st.write('Customer score weights: pmtWeight = 5 typeMatchWeight = 2')
-		st.write('Loan amount: ', '(((price+docfee)*(1+taxrate)-(tradevalue + amountdown))+tagfee)')
-		st.write('Payment: ','(((apr/12)*(loanamt)))/(1-(1+(apr/12))**-term)')
+
 
 	st.subheader('Vehicle search results')
 	st.table(final_df[['year', 'make', 'model', 'vin','body','price','priceGuide', 'cost', 'loan amount','LTV', 'Payment','Gross','Class','Class Match', 'Cust score','Gross score','LTV score','Dealer score', 'Total score']])
