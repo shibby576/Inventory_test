@@ -179,8 +179,11 @@ if submit_button:
 		st.write('Avg customer score: ',final_df['Cust score'].mean())
 		st.write('Avg dealer score: ',final_df['Dealer score'].mean())
 	with col3:
-		st.write('Customer score','cust_score = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
-		#st.write('Customer score','cust_score = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
+		st.subheader('Formulas')
+		st.write('Customer score formula: ',' = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
+		st.write('Customer score weights: pmtWeight = 5 typeMatchWeight = 2')
+		st.write('Loan amount: ', '(((price+docfee)*(1+taxrate)-(tradevalue + amountdown))+tagfee)')
+		st.write('Payment: ','(((apr/12)*(loanamt)))/(1-(1+(apr/12))**-term)')
 
 	st.subheader('Vehicle search results')
 	st.table(final_df[['year', 'make', 'model', 'vin','body','price','priceGuide', 'cost', 'loan amount','LTV', 'Payment','Gross','Class','Class Match', 'Cust score','Gross score','LTV score','Dealer score', 'Total score']])
