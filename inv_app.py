@@ -25,8 +25,8 @@ with st.sidebar.form(key='my_form'):
 	projbankfee = int(st.text_input('Enter bank fee ex -500',-500))
 	LTVMax = float(st.text_input('Enter LTV Max ex 1.05',1.1))
 	grossMin = int(st.text_input('Enter Gross min ex 500',500))
-	desiredGross = int(st.text_input('Enter desired gross',2500))
-	desiredLTV = float(st.text_input('Desired LTV',1.05))
+	desiredGross = int(st.text_input('Enter desired gross ex 2500',2500))
+	desiredLTV = float(st.text_input('Desired LTV ex 1.05',1.05))
 	pmtVar = float(st.text_input('Enter payment variance ex 0.25',0.25))
 
 	submit_button = st.form_submit_button(label='Submit')
@@ -134,6 +134,8 @@ def dealer_score(grossScore,grossWeight,LTVweight,LTVscore):
 def total_score(desiredpayment,payment,pmtWeight,typeMatchWeight,Classmatch,GrossScore,grossWeight,LTVweight,LTVscore):
 	score = (((desiredpayment/payment)*pmtWeight)+(typeMatchWeight*Classmatch)+(GrossScore*grossWeight)+(LTVweight*LTVscore))/((pmtWeight+typeMatchWeight)+(grossWeight+LTVweight))
 	return score
+st.title('Inventory search')
+st.subheader('Instructions')
 
 #Form Output
 if submit_button:
@@ -161,7 +163,6 @@ if submit_button:
 	df['Total score'] = df.apply(lambda x: total_score(desiredpayment,x['Payment'],pmtWeight,typeMatchWeight,x['Class Match'],x['Gross score'],grossWeight,LTVweight,x['LTV score']),axis=1)
 	final_df=df.loc[(df['Payment'] <=(desiredpayment*(1+pmtVar))) & (df['Gross'] >= grossMin) & (df['LTV'] < LTVMax)].sort_values(by='Cust score', ascending=False)
 
-	st.title('Inventory search')
 	col1, col2 = st.columns(2)
 	with col1:
 		st.subheader('Overall stats')
