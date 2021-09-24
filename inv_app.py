@@ -179,11 +179,13 @@ if submit_button:
 	with col2:
 		st.subheader('Option stats')
 #		st.text(final_df['Cust score'].mean())
-		st.write('Avg LTV: ', final_df['LTV'].mean())
+#		st.write('Avg LTV: ', final_df['LTV'].mean())
 		st.write('Median LTV: ', final_df['LTV'].median())
-		st.write('Min payment: ',final_df['Payment'].min())
+#		st.write('Min payment: ',final_df['Payment'].min())
 		st.write('Max payment: ',final_df['Payment'].max())
-		st.write('Avg customer score: ',final_df['Cust score'].mean())
+		st.write('Max loan amount: ',final_df['loan amount'].max())
+		st.write('Max vehicle price: ',final_df['price'].max())
+#		st.write('Avg customer score: ',final_df['Cust score'].mean())
 #		st.write('Avg dealer score: ',final_df['Dealer score'].mean())
 
 
