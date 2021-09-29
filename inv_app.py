@@ -190,5 +190,5 @@ if submit_button:
 
 
 	st.subheader('Vehicle search results')
-	st.table(final_df[['year', 'make', 'model','odometer', 'vin','body','price','priceGuide', 'cost', 'loan amount','LTV', 'Payment','Gross','Class','Class Match', 'Cust score','Gross score','LTV score','Dealer score', 'Total score']])
+	st.table(final_df[['year', 'make', 'model','odometer','Payment','price', 'vin','body','priceGuide', 'cost', 'loan amount','LTV', 'Gross','Class','Class Match', 'Cust score','Gross score','LTV score','Dealer score', 'Total score']])
 
