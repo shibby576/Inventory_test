@@ -161,7 +161,9 @@ if submit_button:
 	df['Class Match'] = df.apply(lambda x: classmatch(x['Class'],vehicletype),axis=1)
 #Add customer score to df
 	df['Cust score'] = df.apply(lambda x: cust_score(desiredpayment,x['Payment'],pmtWeight,typeMatchWeight,x['Class Match']),axis=1)
-
+#Add price to book to df
+	df['price2book'] = df.apply(lambda x: p2b(x['price'],x['priceGuide']),axis=1)
+	
 	final_df=df.loc[(df['LTV'] <=LTVMax) & (df['price2book'] <= p2bMax) &(df['PTI']<= ptiMax) & (df['Payment+BE']<=(desiredpayment*(1+pmtVar)))].sort_values(by='Cust score', ascending=False)
 
 	col1, col2= st.columns(2)
@@ -170,7 +172,7 @@ if submit_button:
 #		st.subheader('Number of vehicle options:')
 #		st.text(len(final_df.index))
 		st.write('Number of vehicle options: ',len(final_df.index))
-#		st.write('Percent of desired type: ',(len(final_df[(final_df['Class Match']>.5)])/len(final_df.index)))
+		st.write('Percent of desired type: ',(len(final_df[(final_df['Class Match']>.5)])/len(final_df.index)))
 	with col2:
 		st.subheader('Option stats')
 #		st.text(final_df['Cust score'].mean())
