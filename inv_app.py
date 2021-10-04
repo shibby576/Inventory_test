@@ -136,7 +136,8 @@ st.subheader('Instructions')
 Adjust the values on the left then select Submit at the bottom to search for vehicles matches. The results are sorted by the customer score, which is a function of whether the vehicle type matches what as input and how far the payment is from their desired payment. Results are filtered by: 
 - Max LTV (set on the left) - Max price to book (set on the left) 
 - Max payment to income ratio (set on the left) 
-- Desired customer payment, including backend and padding (set on the left) 
+- Desired customer payment, including backend and padding (set on the left)
+- All vehicle types are included, but results are ranked higher if they class matches 
 - Results are sorted by the customer score
 """
 #st.subheader('Formulas')
