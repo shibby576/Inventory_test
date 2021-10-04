@@ -131,12 +131,12 @@ def cust_score(desiredpayment,pmt,pmtWeight,typeMatchWeight,classmatch):
 
 st.title('Inventory search')
 st.subheader('Instructions')
-st.write('Adjust the values on the left to mirror a typical deal and input the other parameters, such as Max LTV, that you would consider when working a deal then click Submit. The results are sorted by the customer score, which is a function of whether the vehicle type matches what as input and how far the payment is from their desired payment. Vehicles with an LTV higher than set or a projected gross lower than whats set, will not be shown.')
-st.subheader('Formulas')
-st.write('Customer score formula: ',' = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
-st.write('Customer score weights: pmtWeight = 5 typeMatchWeight = 2')
-st.write('Loan amount: ', '(((price+docfee)*(1+taxrate)-(tradevalue + amountdown))+tagfee)')
-st.write('Payment: ','(((apr/12)*(loanamt)))/(1-(1+(apr/12))**-term)')
+st.markdown('Adjust the values on the left then select Submit at the bottom to search for vehicles matches. The results are sorted by the customer score, which is a function of whether the vehicle type matches what as input and how far the payment is from their desired payment. Results are filtered by: - Max LTV (set on the left) - Max price to book (set on the left) - Max payment to income ratio (set on the left) - Desired customer payment, including backend and padding (set on the left) - Results are sorted by the customer score')
+#st.subheader('Formulas')
+#st.write('Customer score formula: ',' = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
+#st.write('Customer score weights: pmtWeight = 5 typeMatchWeight = 2')
+#st.write('Loan amount: ', '(((price+docfee)*(1+taxrate)-(tradevalue + amountdown))+tagfee)')
+#st.write('Payment: ','(((apr/12)*(loanamt)))/(1-(1+(apr/12))**-term)')
 
 #Form Output
 if submit_button:
