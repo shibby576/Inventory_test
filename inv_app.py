@@ -163,7 +163,7 @@ if submit_button:
 	df['Cust score'] = df.apply(lambda x: cust_score(desiredpayment,x['Payment'],pmtWeight,typeMatchWeight,x['Class Match']),axis=1)
 #Add price to book to df
 	df['price2book'] = df.apply(lambda x: p2b(x['price'],x['priceGuide']),axis=1)
-	
+
 	final_df=df.loc[(df['LTV'] <=LTVMax) & (df['price2book'] <= p2bMax) &(df['PTI']<= ptiMax) & (df['Payment+BE']<=(desiredpayment*(1+pmtVar)))].sort_values(by='Cust score', ascending=False)
 
 	col1, col2= st.columns(2)
@@ -187,5 +187,5 @@ if submit_button:
 
 
 	st.subheader('Vehicle search results')
-	st.table(final_df[['year','stockNumber', 'make', 'model','odometer','Payment','Payment+BE','price2book','PTI','PTI+BE','price', 'vin','body','priceGuide', 'cost', 'loan amount','loan amount BE','LTV','LTV+BE', 'Gross','Class','Class Match', 'Cust score',]])
+	st.table(final_df[['year','stockNumber', 'make', 'model','odometer','Payment','Payment+BE','price2book','PTI','price', 'vin','body','priceGuide', 'cost', 'loan amount','loan amount BE','LTV', 'Gross','Class','Class Match', 'Cust score',]])
 
