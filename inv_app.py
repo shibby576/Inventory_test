@@ -215,9 +215,9 @@ if submit_button:
 #add LTV
 	df['LTV'] = df.apply(lambda x: ltv_calc(x['loan amount'], x['priceGuide']), axis=1)
 #add pmt
-	df['Payment'] = df.apply(lambda x: pmt(interestrate, x['loan amount'],term), axis=1)
+	df['Payment'] = df.apply(lambda x: pmt(apr, x['loan amount'],term), axis=1)
 	#add pmt WITH BE
-	df['Payment+BE'] = df.apply(lambda x: pmt(interestrate, x['loan amount BE'],term), axis=1)
+	df['Payment+BE'] = df.apply(lambda x: pmt(apr, x['loan amount BE'],term), axis=1)
 	#add PTI
 	df['PTI'] = df.apply(lambda x: pti(x['Payment'],income), axis=1)
 #add classmatch
