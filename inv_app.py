@@ -191,12 +191,13 @@ st.title('Inventory search')
 st.subheader('Instructions')
  #st.markdown('Adjust the values on the left then select Submit at the bottom to search for vehicles matches. The results are sorted by the customer score, which is a function of whether the vehicle type matches what as input and how far the payment is from their desired payment. Results are filtered by: - Max LTV (set on the left) - Max price to book (set on the left) - Max payment to income ratio (set on the left) - Desired customer payment, including backend and padding (set on the left) - Results are sorted by the customer score')
 """ 
-Adjust the values on the left then select Submit at the bottom to search for vehicles matches. The results are sorted by the customer score, which is a function of whether the vehicle type matches what as input and how far the payment is from their desired payment. Results are filtered by: 
-- Max LTV (set on the left) - Max price to book (set on the left) 
-- Max payment to income ratio (set on the left) 
-- Desired customer payment, including backend and padding (set on the left)
-- All vehicle types are included, but results are ranked higher if they class matches 
-- Results are sorted by the customer score
+Adjust the values on the left then select Submit at the bottom to search for vehicles matches. The results are sorted by the payment (including backend),. Results are filtered by: 
+- Max LTV (defined by CS table)
+- Max price to book (defined by CS table)
+- Max payment to income ratio (CS based max pmt to income ratio)
+- Desired customer payment, including backend
+- Vehicle type
+- Results are sorted by payment
 """
 
 #call threshold functions
@@ -244,7 +245,10 @@ if submit_button:
 		st.write('Max vehicle price: ',final_df['price'].max())
 #		st.write('Avg customer score: ',final_df['Cust score'].mean())
 #		st.write('Avg dealer score: ',final_df['Dealer score'].mean())
-
+		st.write('APR: ', apr)
+		st.write('LTVmax ', ltvMax)
+		st.write('PTI max ', PTIMax)
+		st.write('P2B max ', P2BMax)
 
 	st.subheader('Vehicle search results')
 	st.table(final_df[['year','stockNumber', 'make', 'model','odometer','Payment','Payment+BE','price2book','PTI','price', 'vin','body','priceGuide', 'cost', 'loan amount','loan amount BE','LTV','Class']])
