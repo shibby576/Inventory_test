@@ -233,7 +233,7 @@ if submit_button:
 		st.subheader('Overall stats')
 #		st.subheader('Number of vehicle options:')
 #		st.text(len(final_df.index))
-	    st.write('Number of vehicle options: ',len(final_df.index))
+        st.write('Number of vehicle options: ',len(final_df.index))
         st.write('APR: ', apr)
         st.write('LTVmax ', ltvMax)
         st.write('PTI max ', PTIMax)
