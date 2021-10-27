@@ -9,116 +9,31 @@ with st.sidebar.form(key='my_form'):
 #Customer input variables
 	amountdown = int(st.text_input('Amount Down ex 500',500))
 	tradevalue = int(st.text_input('Trade Value ex 1000',1000))
+	taxrate = float(st.text_input('Tax rate ex 0.07',0.07))
+#Creditscore = 0
+	interestrate = float(st.text_input('Enter APR ex 0.12',0.12))
 	income = int(st.text_input('Enter gross monthly income ex 3000', 3000))
 	desiredpayment = int(st.text_input('Desired payment ex 300',300))
 	vehicletype = st.text_input('Enter Vehicle type (only SUV, SEDAN, TRUCK, COUPE, VERT, VAN, HATCHBACK', 'SUV')
-	creditScore = int(st.text_input('Enter credit score', 650))
+	term=int(st.text_input('Enter term ex 72',72))
+
+#Dealer input veriables
+	docfee=int(st.text_input('Enter Doc Fee ex 250',250)) #pre tax
+	tagfee = int(st.text_input('Enter Tag fee ex 35',35)) #post tax
+	ptiMax = float(st.text_input('Enter max pmt to income ex 0.3', 0.3))
+	p2bMax = float(st.text_input('Enter price to book max ex 1.05', 1.05))
+	LTVMax = float(st.text_input('Enter LTV Max ex 1.05',1.1))
+#	grossMin = int(st.text_input('Enter Gross min ex 500',500))
+#	desiredGross = int(st.text_input('Enter desired gross ex 2500',2500))
+#	desiredLTV = float(st.text_input('Desired LTV ex 1.05',1.05))
+	pmtVar = float(st.text_input('Enter payment variance ex 0.25',0.25))
+	projbackend = int(st.text_input('Enter projected backend ex 1000',1000))
+	projintspread = float(st.text_input('Enter projected int spread ex 0.02',.02))
+	projbankfee = int(st.text_input('Enter bank fee ex -500',-500))
 
 	submit_button = st.form_submit_button(label='Submit')
-### dealer constants
-docfee=int(250) #pre tax
-tagfee = int(35) #post tax
-projbackend = int(1500)
-taxrate = float(0.08)
-term=int(72)
 
 #FUNCTIONS
-#Get APR based on CS
-def apr(creditScore):
-    apr=.1
-    if creditScore >= 0 and creditScore <= 579:
-        apr =.2
-        return apr
-    elif creditScore >= 580 and creditScore <= 669:
-        apr =.12
-        return apr
-    elif creditScore >= 670 and creditScore <= 739:
-        apr =.07
-        return apr
-    elif creditScore >= 740 and creditScore<= 799:
-        apr =.05
-        return apr
-    elif creditScore >= 800 and creditScore<= 850:
-        apr =.035
-        return apr
-    elif creditScore is null:
-        apr =.2
-        return apr
-    else:
-        return apr
-#Get Max LTV based on CS
-def LTVMax(creditScore):
-    ltvMax=1.25
-    if creditScore >= 0 and creditScore <= 579:
-        ltvMax =.85
-        return ltvMax
-    elif creditScore >= 580 and creditScore <= 669:
-        ltvMax =1.05
-        return ltvMax
-    elif creditScore >= 670 and creditScore <= 739:
-        ltvMax =1.15
-        return ltvMax
-    elif creditScore >= 740 and creditScore<= 799:
-        ltvMax =1.25
-        return ltvMax
-    elif creditScore >= 800 and creditScore<= 850:
-        ltvMax =1.25
-        return ltvMax
-    elif creditScore is null:
-        ltvMax = .85
-        return ltvMax
-    else:
-        ltvMax = 1
-        return ltvMax
-
-#Get Max PTI based on CS
-def PTIMax(creditScore):
-    PTIMax=.2
-    if creditScore >= 0 and creditScore <= 579:
-        PTIMax =.15
-        return PTIMax
-    elif creditScore >= 580 and creditScore <= 669:
-        PTIMax =.15
-        return PTIMax
-    elif creditScore >= 670 and creditScore <= 739:
-        PTIMax =.17
-        return PTIMax
-    elif creditScore >= 740 and creditScore<= 799:
-        PTIMax =.2
-        return PTIMax
-    elif creditScore >= 800 and creditScore<= 850:
-        PTIMax =.2
-        return PTIMax
-    elif creditScore is null:
-        PTIMax =.15
-        return PTIMax
-    else:
-        return PTIMax
-
-#Get Max Price to book based on CS
-def P2BMax(creditScore):
-    P2BMax=1.1
-    if creditScore >= 0 and creditScore <= 579:
-        P2BMax =1
-        return P2BMax
-    elif creditScore >= 580 and creditScore <= 669:
-        P2BMax =1
-        return P2BMax
-    elif creditScore >= 670 and creditScore <= 739:
-        P2BMax =1.05
-        return P2BMax
-    elif creditScore >= 740 and creditScore<= 799:
-        P2BMax =1.1
-        return P2BMax
-    elif creditScore >= 800 and creditScore<= 850:
-        P2BMax =1.1
-        return P2BMax
-    elif creditScore is null:
-        P2BMax =1
-        return P2BMax
-    else:
-        return P2BMax
-
 #Loan amount function
 def loan_amt(price, docfee, taxrate, tradevalue,amountdown,tagfee):
 	loanamt = (((price+docfee)*(1+taxrate)-(tradevalue + amountdown))+tagfee)
@@ -143,6 +58,11 @@ def pmt(apr,loanamt,term):
 def pti(payment,income):
     pti=payment/income
     return pti
+
+#gross function
+def gross(price,cost,projbackend,projbankfee,loan_amt,projintspread):
+	gross = (price-cost)+projbackend+projbankfee+(loan_amt*projintspread)
+	return gross
 
 #Price to book formula
 def p2b(price,book):
@@ -187,6 +107,28 @@ def classdef(body):
 		return style
 
 
+#SCORING
+#customer scoring
+pmtWeight = 5
+typeMatchWeight = 2
+
+
+#class match score
+def classmatch(body,vehicletype):
+	typeMatchscore_yes = 1
+	typeMatchscore_no = .5
+	if body==vehicletype:
+		class_match=typeMatchscore_yes
+	else:
+		class_match=typeMatchscore_no
+		
+	return class_match
+
+#Customer score
+def cust_score(desiredpayment,pmt,pmtWeight,typeMatchWeight,classmatch):
+	cust_score = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)
+	return cust_score
+
 st.title('Inventory search')
 st.subheader('Instructions')
  #st.markdown('Adjust the values on the left then select Submit at the bottom to search for vehicles matches. The results are sorted by the customer score, which is a function of whether the vehicle type matches what as input and how far the payment is from their desired payment. Results are filtered by: - Max LTV (set on the left) - Max price to book (set on the left) - Max payment to income ratio (set on the left) - Desired customer payment, including backend and padding (set on the left) - Results are sorted by the customer score')
@@ -198,12 +140,11 @@ Adjust the values on the left then select Submit at the bottom to search for veh
 - All vehicle types are included, but results are ranked higher if they class matches 
 - Results are sorted by the customer score
 """
-
-#call threshold functions
-apr = apr(creditScore)
-ltvMax = LTVMax(creditScore)
-P2BMax = P2BMax(creditScore)
-PTIMax = PTIMax(creditScore)
+#st.subheader('Formulas')
+#st.write('Customer score formula: ',' = (((desiredpayment/pmt)*pmtWeight)+(typeMatchWeight*classmatch))/(pmtWeight+typeMatchWeight)')
+#st.write('Customer score weights: pmtWeight = 5 typeMatchWeight = 2')
+#st.write('Loan amount: ', '(((price+docfee)*(1+taxrate)-(tradevalue + amountdown))+tagfee)')
+#st.write('Payment: ','(((apr/12)*(loanamt)))/(1-(1+(apr/12))**-term)')
 
 #Form Output
 if submit_button:
@@ -220,12 +161,18 @@ if submit_button:
 	df['Payment+BE'] = df.apply(lambda x: pmt(interestrate, x['loan amount BE'],term), axis=1)
 	#add PTI
 	df['PTI'] = df.apply(lambda x: pti(x['Payment'],income), axis=1)
+#add gross
+	df['Gross'] = df.apply(lambda x: gross(x['price'], x['cost'],projbackend,projbankfee,x['loan amount'],projintspread), axis=1)
 #add classmatch
 	df['Class'] = df.apply(lambda x: classdef(x['body']),axis=1)
+#Add class match score to df
+	df['Class Match'] = df.apply(lambda x: classmatch(x['Class'],vehicletype),axis=1)
+#Add customer score to df
+	df['Cust score'] = df.apply(lambda x: cust_score(desiredpayment,x['Payment'],pmtWeight,typeMatchWeight,x['Class Match']),axis=1)
 #Add price to book to df
 	df['price2book'] = df.apply(lambda x: p2b(x['price'],x['priceGuide']),axis=1)
 
-	final_df=df.loc[(df['LTV'] <=ltvMax) & (df['price2book'] <= P2BMax) &(df['PTI']<= PTIMax) & (df['Payment+BE']<=desiredpayment) & (df['Class']<=vehicletype)].sort_values(by='Payment+BE', ascending=True)
+	final_df=df.loc[(df['LTV'] <=LTVMax) & (df['price2book'] <= p2bMax) &(df['PTI']<= ptiMax) & (df['Payment+BE']<=(desiredpayment*(1+pmtVar)))].sort_values(by='Cust score', ascending=False)
 
 	col1, col2= st.columns(2)
 	with col1:
@@ -248,5 +195,5 @@ if submit_button:
 
 
 	st.subheader('Vehicle search results')
-	st.table(final_df[['year','stockNumber', 'make', 'model','odometer','Payment','Payment+BE','price2book','PTI','price', 'vin','body','priceGuide', 'cost', 'loan amount','loan amount BE','LTV','Class']])
+	st.table(final_df[['year','stockNumber', 'make', 'model','odometer','Payment','Payment+BE','price2book','PTI','price', 'vin','body','priceGuide', 'cost', 'loan amount','loan amount BE','LTV', 'Gross','Class','Class Match', 'Cust score',]])
 
