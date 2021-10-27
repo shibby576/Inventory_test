@@ -233,7 +233,6 @@ if submit_button:
 #		st.subheader('Number of vehicle options:')
 #		st.text(len(final_df.index))
 		st.write('Number of vehicle options: ',len(final_df.index))
-		st.write('Percent of desired type: ',(len(final_df[(final_df['Class Match']>.5)])/len(final_df.index)))
 	with col2:
 		st.subheader('Option stats')
 #		st.text(final_df['Cust score'].mean())
