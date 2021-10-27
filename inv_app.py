@@ -234,6 +234,10 @@ if submit_button:
 #		st.subheader('Number of vehicle options:')
 #		st.text(len(final_df.index))
 		st.write('Number of vehicle options: ',len(final_df.index))
+        st.write('APR: ', apr)
+        st.write('LTVmax ', ltvMax)
+        st.write('PTI max ', PTIMax)
+        st.write('P2B max ', P2BMax)
 	with col2:
 		st.subheader('Option stats')
 #		st.text(final_df['Cust score'].mean())
@@ -245,10 +249,7 @@ if submit_button:
 		st.write('Max vehicle price: ',final_df['price'].max())
 #		st.write('Avg customer score: ',final_df['Cust score'].mean())
 #		st.write('Avg dealer score: ',final_df['Dealer score'].mean())
-		st.write('APR: ', apr)
-		st.write('LTVmax ', ltvMax)
-		st.write('PTI max ', PTIMax)
-		st.write('P2B max ', P2BMax)
+
 
 	st.subheader('Vehicle search results')
 	st.table(final_df[['year','stockNumber', 'make', 'model','odometer','Payment','Payment+BE','price2book','PTI','price', 'vin','body','priceGuide', 'cost', 'loan amount','loan amount BE','LTV','Class']])
